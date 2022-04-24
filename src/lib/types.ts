@@ -32,3 +32,9 @@ export interface AsyncInitializable {
 export interface Disposable {
   dispose(): Promise<void>;
 }
+
+export type SerializePropertyValue<T extends Record<any, any> = any, K = keyof T> = (
+  value: T[K],
+  object: T,
+  key: K
+) => any | undefined;

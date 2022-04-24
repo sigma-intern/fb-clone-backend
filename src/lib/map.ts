@@ -56,7 +56,7 @@ function* toGuardedMapIterable<K, V>(
   filterUndefined = false
 ): Iterable<[K, NonOptional<V>]> {
   const iterator =
-    as<Iterable<[K, V]>>(entries) && typeof [Symbol.iterator] === 'function'
+    as<Iterable<[K, V]>>(entries) && typeof entries[Symbol.iterator] === 'function'
       ? entries[Symbol.iterator]()
       : (entries as Iterator<[K, V]>);
   let result: IteratorResult<[K, V]>;

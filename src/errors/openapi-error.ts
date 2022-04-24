@@ -26,16 +26,11 @@ export function coerceLogicError(err: OpenApiFinalError): OpenApiFinalLogicError
 }
 
 export class OpenApiError extends Error {
-  readonly openApiError: OpenAPIRequestValidatorError;
-  readonly jsonSchemaError: Ajv.ErrorObject;
-
   constructor(
-    openApiError: OpenAPIRequestValidatorError,
-    jsonSchemaError: Ajv.ErrorObject,
+    public readonly openApiError: OpenAPIRequestValidatorError,
+    public readonly jsonSchemaError: Ajv.ErrorObject,
     message?: string
   ) {
     super(message);
-    this.openApiError = openApiError;
-    this.jsonSchemaError = jsonSchemaError;
   }
 }

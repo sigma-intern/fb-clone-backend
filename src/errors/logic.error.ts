@@ -1,12 +1,13 @@
 import { ErrorCode } from './codes';
-import { SerializedError, serializeError } from './utils';
+import {
+  includeHttp,
+  SerializedError,
+  serializeError,
+  ErrorSerializationProperties,
+} from './utils';
 
 export interface ILogicError {
   code: ErrorCode;
-}
-
-export interface SerializedLogicError extends SerializedError {
-  name: string;
 }
 
 export class LogicError extends TypeError implements ILogicError {
@@ -22,12 +23,18 @@ export class LogicError extends TypeError implements ILogicError {
     this.code = code;
   }
 
-  asJsonObject(debug = false): SerializedLogicError {
-    const data = serializeError(this, {
-      includeStack: debug,
-      includeHttp: debug,
-    }) as SerializedLogicError;
-    data.name = this.constructor.name;
-    return data;
+  toJsonObject(debug = false): SerializedError {
+    return serializeError(this, getDefaultErrorSerializationProperties(debug));
   }
+}
+
+export function getDefaultErrorSerializationProperties(
+  debug: boolean
+): ErrorSerializationProperties {
+  return {
+    name: debug,
+    stack: debug,
+    cause: true,
+    [includeHttp]: debug,
+  };
 }

@@ -39,13 +39,13 @@ export const errorHandlingPipeline: ErrorRequestHandler[] = [
           res.status(400);
           break;
       }
-      res.json(err.asJsonObject(isNotProduction()));
+      res.json(err.toJsonObject(isNotProduction()));
     } else {
       if (err instanceof SyntaxError && err.message.includes('JSON')) {
         res
           .status(400)
           .json(
-            new LogicError(ErrorCode.JsonBad, err.message, err).asJsonObject(isNotProduction())
+            new LogicError(ErrorCode.JsonBad, err.message, err).toJsonObject(isNotProduction())
           );
       } else if (isOpenApiFinalError(err)) {
         const error = coerceLogicError(err);
@@ -53,7 +53,7 @@ export const errorHandlingPipeline: ErrorRequestHandler[] = [
       } else {
         res
           .status(500)
-          .json(new ServerError(ErrorCode.Server, err).asJsonObject(isNotProduction()));
+          .json(new ServerError(ErrorCode.Server, err).toJsonObject(isNotProduction()));
       }
     }
 

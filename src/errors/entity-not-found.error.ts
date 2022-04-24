@@ -10,4 +10,10 @@ export class EntityNotFoundError<I = string> extends LogicError {
   ) {
     super(code, message, cause);
   }
+
+  toJsonObject(debug = false) {
+    const serialized = super.toJsonObject(debug);
+    serialized.entityId = this.entityId;
+    return serialized;
+  }
 }
