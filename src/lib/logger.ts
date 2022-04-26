@@ -1,7 +1,6 @@
 import { configure, getLogger, shutdown as loggerShutdown } from 'log4js';
 import appRootPath from 'app-root-path';
-// import { config } from './config';
-const config = { logLevel: 'debug' };
+import { config } from './config';
 
 export const loggerCategory = 'default';
 
